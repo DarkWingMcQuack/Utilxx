@@ -230,7 +230,7 @@ public:
 
     constexpr auto flatten() const&
     {
-        if constexpr(is_opt_v<T>{
+        if constexpr(is_opt_v<T>) {
             return getValue().flatten();
         } else {
             return *this;
