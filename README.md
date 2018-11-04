@@ -8,7 +8,7 @@ A lot of types are move only to avoid copying, and most types support a monad-li
 `flatMap` and `map`.
 
 ### Opt
-`Opt` is an optional type which is based on std::optional but with an monad-like interface through
+`Opt` is an optional type which is based on `std::optional` but with an monad-like interface through
 `flatMap` and `map`. Aside from that free functions such as `traverse` make it easy to use `Opt`
 with `std::vector`.
 
