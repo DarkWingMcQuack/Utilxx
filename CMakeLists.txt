@@ -5,8 +5,6 @@ list                  (APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set_property          (GLOBAL PROPERTY USE_FOLDERS ON)
 set                   (CMAKE_CXX_STANDARD 17)
 
-include               (set_max_warning_level)
-set_max_warning_level ()
 
 ##################################################    Options     ##################################################
 option(BUILD_TESTS "Build tests." OFF)
@@ -20,23 +18,6 @@ set (PROJECT_FILES
   ${PROJECT_CMAKE_UTILS}
   ${PROJECT_MISC})
 
-include            (assign_source_group)
-assign_source_group(${PROJECT_FILES})
-
-##################################################  Dependencies  ##################################################
-# include(import_library)
-# ADD LIBRARIES HERE.
-# Examples:
-# - Header Only:
-#   find_package  (GLM REQUIRED)
-#   import_library(GLM_INCLUDE_DIRS)
-# - Identical Debug and Release:
-#   find_package  (OpenGL REQUIRED)
-#   import_library(OPENGL_INCLUDE_DIR OPENGL_LIBRARIES)
-# - Separate Debug and Release:
-#   find_package  (Boost REQUIRED iostreams)
-#   import_library(Boost_INCLUDE_DIRS Boost_IOSTREAMS_LIBRARY_DEBUG Boost_IOSTREAMS_LIBRARY_RELEASE)
-# - You may also set the PROJECT_INCLUDE_DIRS and PROJECT_LIBRARIES instead of using import_library.
 
 ##################################################    Targets     ##################################################
 add_library(${PROJECT_NAME} INTERFACE)
@@ -45,7 +26,6 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include>)
 target_include_directories(${PROJECT_NAME} INTERFACE ${PROJECT_INCLUDE_DIRS})
-target_link_libraries     (${PROJECT_NAME} INTERFACE ${PROJECT_LIBRARIES})
 target_compile_definitions(${PROJECT_NAME} INTERFACE ${PROJECT_COMPILE_DEFINITIONS})
 
 # Hack for header-only project to appear in the IDEs.
@@ -54,7 +34,6 @@ target_include_directories(${PROJECT_NAME}_ PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include
   ${CMAKE_CURRENT_BINARY_DIR})
 target_include_directories(${PROJECT_NAME}_ PUBLIC ${PROJECT_INCLUDE_DIRS})
-target_link_libraries     (${PROJECT_NAME}_ PUBLIC ${PROJECT_LIBRARIES})
 target_compile_definitions(${PROJECT_NAME}_ PUBLIC ${PROJECT_COMPILE_DEFINITIONS})
 set_target_properties     (${PROJECT_NAME}_ PROPERTIES LINKER_LANGUAGE CXX)
 
