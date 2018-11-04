@@ -300,8 +300,8 @@ constexpr auto combine(Opt<T>&& first, Opt<U>&& second)
         return second.map([&](auto&& second_elem) {
             return std::pair{std::move(first_elem),
                              std::move(second_elem)};
-        })
-    })
+        });
+    });
 }
 
 } // namespace utilxx
