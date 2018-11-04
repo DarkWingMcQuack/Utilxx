@@ -1,5 +1,5 @@
 ##################################################    Project     ##################################################
-cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 project               (Utilxx VERSION 1.0 LANGUAGES CXX)
 set_property          (GLOBAL PROPERTY USE_FOLDERS ON)
 set                   (CMAKE_CXX_STANDARD 17)
