@@ -253,7 +253,8 @@ private:
 };
 
 template<class T>
-constexpr auto collect(std::vector<Opt<T>>&& vec) -> Opt<std::vector<T>>
+constexpr auto collect(std::vector<Opt<T>>&& vec)
+    -> Opt<std::vector<T>>
 {
     std::vector<T> ret_vec;
     for(auto&& elem : vec) {
