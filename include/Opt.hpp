@@ -213,9 +213,9 @@ public:
     constexpr auto flatten() &&
     {
         if constexpr(is_opt_v<T>) {
-            return getValue().flatten();
+            return std::move(getValue().flatten());
         } else {
-            return *this;
+            return std::move(*this);
         }
     }
 
