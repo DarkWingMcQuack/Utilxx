@@ -22,14 +22,14 @@ When calling `map` with such a function as argument results in an`Opt<U>` which 
 
 With those two function chaining calls to different functions is super easy.
 Imagine functions with signatures like:
-```
+```C++
 auto first() -> Opt<int>;
 auto second(int) -> Opt<std::string>;
 auto third(std::string) -> Opt<double>;
 auto fourth(double) -> int;
 ```
 If you want to call the `second` function on the result of the `first` function and then the `third` function with that result, you could do this with if else:
-```
+```C++
 auto compute() -> Opt<int>
 {
     auto first_opt = first();
@@ -47,7 +47,7 @@ auto compute() -> Opt<int>
 }
 ```
 This works, but is incredibly easier using `flatMap` and `map`, which would look like this:
-```
+```C++
 auto compute() -> Opt<int>
 {
     return first()
@@ -69,7 +69,7 @@ Another function an `Opt<T>` provides is `onValue`.
 A call to `onValue` expects a function taking an `T` and returning `void`.
 One can think of `onValue` as some kind of `if` construct.
 For example the following:
-```
+```C++
 auto foo() -> Opt<std::string>;
 
 auto bar() -> void
@@ -81,7 +81,7 @@ auto bar() -> void
 }
 ```
 could also be written as:
-```
+```C++
 auto foo() -> Opt<std::string>;
 
 auto bar() -> void
@@ -94,7 +94,7 @@ auto bar() -> void
 }
 ```
 or even as:
-```
+```C++
 auto foo() -> Opt<std::string>;
 
 auto bar() -> void
@@ -116,7 +116,7 @@ it returns an `Opt<std::pair<T,U>>` which holds the two values wrapped in the `O
 `std::nullopt` if one of them or both hold an `std::nullopt`.
 This is handy when two values are needed to continue a computation.
 For example:
-```
+```C++
 auto foo() -> Opt<std::string>;
 auto bar() -> Opt<int>;
 auto baz(std::string, int) -> double;
@@ -133,7 +133,7 @@ auto compute() -> Opt<double>
 }
 ```
 can be implemented much easier with `combine`:
-```
+```C++
 auto foo() -> Opt<std::string>;
 auto bar() -> Opt<int>;
 auto baz(std::string, int) -> double;
