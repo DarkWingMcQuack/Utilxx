@@ -240,6 +240,41 @@ public:
         return std::move(*this);
     }
 
+    template<class Func>
+    constexpr auto finally(Func&& func) const&
+    {
+        using FuncRet = std::invoke_result_t<Func>;
+
+        static_assert(std::is_void_v<FuncRet>,
+                      "return of onValue function must be void");
+
+        std::invoke(std::forward<Func>(func));
+        return *this;
+    }
+
+    template<class Func>
+    constexpr auto finally(Func&& func) &
+    {
+        using FuncRet = std::invoke_result_t<Func>;
+
+        static_assert(std::is_void_v<FuncRet>,
+                      "return of onValue function must be void");
+        std::invoke(std::forward<Func>(func));
+        return *this;
+    }
+
+    template<class Func>
+    constexpr auto finally(Func&& func) &&
+    {
+
+        using FuncRet = std::invoke_result_t<Func>;
+
+        static_assert(std::is_void_v<FuncRet>,
+                      "return of onValue function must be void");
+        std::invoke(std::forward<Func>(func));
+        return std::move(*this);
+    }
+
     constexpr auto flatten() &&
     {
         if constexpr(is_opt_v<T>) {
