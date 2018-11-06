@@ -210,6 +210,36 @@ public:
         return std::move(*this);
     }
 
+    template<class Func>
+    constexpr auto onError(Func&& func) & -> Opt<T>&
+    {
+        using FuncRet = std::invoke_result_t<Func>;
+
+        static_assert(std::is_void_v<FuncRet>,
+                      "return of onError function must be void");
+
+        if(!*this) {
+            std::invoke(std::forward<Func>(func));
+        }
+
+        return *this;
+    }
+
+    template<class Func>
+    constexpr auto onError(Func&& func) && -> Opt<T>&&
+    {
+        using FuncRet = std::invoke_result_t<Func>;
+
+        static_assert(std::is_void_v<FuncRet>,
+                      "return of onError function must be void");
+
+        if(!*this) {
+            std::invoke(std::forward<Func>(func));
+        }
+
+        return std::move(*this);
+    }
+
     constexpr auto flatten() &&
     {
         if constexpr(is_opt_v<T>) {
