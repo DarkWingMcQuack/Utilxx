@@ -131,22 +131,6 @@ auto foo() -> Opt<std::string>;
 
 auto bar() -> void
 {
-    auto opt = foo();
-    
-    opt.onValue([](auto&& str){
-        ... do something ...
-    })
-    .onError([]{
-        ... do something else ...
-    });    
-}
-```
-or as:
-```C++
-auto foo() -> Opt<std::string>;
-
-auto bar() -> void
-{
     auto opt = foo()
         .onValue([](auto&& str){
             ... do something ...
@@ -159,7 +143,7 @@ auto bar() -> void
 
 #### finally
 The `finally` member function of `Opt` expects a function without any parameters which returns `void`, just like `onError`.
-The difference to `onError` is, that the passed function will executed no matter what the `Opt`s current state is.
+The difference to `onError` is, that the passed function will be executed no matter what the `Opt`s current state is.
 Using `finally`, `onError` and `onValue`, a `if-else-finally` like controlflow can be build.
 Assuming C++ would have a `if-else-finally` like controlflow structure, this:
 ```C++
@@ -178,25 +162,6 @@ auto bar() -> void
 }
 ```
 could also be written as:
-```C++
-auto foo() -> Opt<std::string>;
-
-auto bar() -> void
-{
-    auto opt = foo();
-    
-    opt.onValue([](auto&& str){
-        ... do something ...
-    })
-    .onError([]{
-        ... do something else ...
-    })
-    .finally([]{
-        ... do this finally ...
-    });    
-}
-```
-or as:
 ```C++
 auto foo() -> Opt<std::string>;
 
