@@ -46,7 +46,7 @@ auto compute() -> Opt<int>
     return std::nullopt;
 }
 ```
-This works, but is incredibly easier using `flatMap` and `map`, which would look like this:
+This works, but it is incredibly easier using `flatMap` and `map`, which would look like this:
 ```C++
 auto compute() -> Opt<int>
 {
