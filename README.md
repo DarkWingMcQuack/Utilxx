@@ -196,11 +196,9 @@ auto baz(std::string, int) -> double;
 auto compute() -> Opt<double>
 {
     auto first = foo();
-    if(first){
-        auto second = bar();
-        if(second){
-            return baz(first.getValue(), second.getValue());
-        }
+    auto second = bar();
+    if(first && second){
+        return baz(first.getValue(), second.getValue());
     }
     return std::nullopt;
 }
