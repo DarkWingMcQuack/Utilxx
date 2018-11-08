@@ -9,7 +9,18 @@ A lot of types are move only to avoid copying, and most types support a monad-li
 
 ### Opt
 `Opt` is an optional type which is based on `std::optional` but with an monad-like interface through
-`flatMap` and `map`. 
+`flatMap` and `map`. An optional type adds another instance to the type it wraps up, the std::nullopt instance, which represents that no value is currently available. This is pretty nice for example for optional function objects, or as a return type of functions which can fail.
+For example:
+```C++
+auto div(int first, int second) -> Opt<Int>
+{
+    if(second == 0){
+        return std::nullopt;
+    }
+    return first / second;
+}
+```
+Here the function would fail if `second` is `0`, which can be nicely repressented with the return type `Opt<int>`.
 
 #### flatMap and map
 
@@ -221,5 +232,21 @@ auto compute() -> Opt<double>
 `combine` also exists as free function expecting two `Opt`s.
 
 ### Result
-`Result` is a type like `std::expected` which is proposed to be added to the standard. It can be used as return type of functions, holding either the result of the function or an error. `Result` also has a monad-like interface through
-`flatMap` and `map`. And also free functions like `Try` to wrap up call which might throw an exception into a `Result`.
+Sometime `Opt` is not enought as a function return type. Whenever the caller of a function wants to know what exactly went wrong when calling the function instead of just the fact that something went wrong.
+Here `Result` can help. A function returning a `Result<T, E>` normaly returns a value of type `T`, but in the case of an error it returns an error of type `E`. 
+For example:
+```C++
+auto div(int first, int second, int third) -> Result<int, std::string>
+{
+    if(second == 0){
+        return "second value was 0"s;
+    }
+    
+    if(third == 0){
+        return "third value was 0"s;
+    }
+    
+    return (first / second) / third;
+}
+```
+With a function like this, the caller can check with `hasValue` or `hasError` if a value was produced and continue with function like `onValue`, `flatMap` and so on descriped earlier in the `Opt` section with the value. When no value was produced, the caller can use `mapError`, `flatMapError`, `onError` or `getError` to continue with the given error.
