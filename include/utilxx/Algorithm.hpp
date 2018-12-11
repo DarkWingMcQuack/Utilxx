@@ -47,6 +47,42 @@ auto transform_into_vector(InputIterator first,
     return ret_vec;
 }
 
+template<class T,
+         class Alloc,
+         class UnaryOperation>
+auto transform(const std::vector<T, Alloc>& vec,
+               UnaryOperation op)
+{
+    using OpReturnType = std::invoke_result_t<UnaryOperation, const T&>;
+    using VecType = std::vector<OpReturnType>;
+
+    VecType ret_vec;
+    std::transform(std::cbegin(vec),
+                   std::cend(vec),
+                   std::back_inserter(ret_vec),
+                   op);
+
+    return ret_vec;
+}
+
+template<class T,
+         class Alloc,
+         class UnaryOperation>
+auto transform(std::vector<T, Alloc>&& vec,
+               UnaryOperation op)
+{
+    using OpReturnType = std::invoke_result_t<UnaryOperation, T&&>;
+    using VecType = std::vector<OpReturnType>;
+
+    VecType ret_vec;
+    std::transform(std::make_move_iterator(std::begin(vec)),
+                   std::make_move_iterator(std::end(vec)),
+                   std::back_inserter(ret_vec),
+                   op);
+
+    return ret_vec;
+}
+
 template<class Key,
          class T,
          class Compare,
