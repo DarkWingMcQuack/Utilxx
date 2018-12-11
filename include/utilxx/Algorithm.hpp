@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <map>
 #include <set>
+#include <type_traits>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -25,6 +26,25 @@ OutputIterator transform_if(InputIterator first,
         ++first;
     }
     return result;
+}
+
+template<class InputIterator,
+         class UnaryOperation>
+auto transform_into_vector(InputIterator first,
+                           InputIterator last,
+                           UnaryOperation op)
+{
+    using ContainerType = typename InputIterator::value_type;
+    using OpReturnType = std::invoke_result_t<UnaryOperation, ContainerType>;
+    using VecType = std::vector<OpReturnType>;
+
+    VecType ret_vec;
+    std::transform(first,
+                   last,
+                   std::back_inserter(ret_vec),
+                   op);
+
+    return ret_vec;
 }
 
 template<class Key,
