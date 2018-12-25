@@ -4,6 +4,8 @@
 #include <boost/fiber/mutex.hpp>
 #include <mutex>
 
+namespace utilxx {
+
 class FiberReadWriteLock
 {
 public:
@@ -64,3 +66,5 @@ private:
     int queued_writers_ = 0;
     bool active_writer_ = false;
 };
+
+} // namespace utilxx
