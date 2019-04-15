@@ -1,5 +1,5 @@
 # Utilxx
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
 Utlixx is a header only lib, which contains different types and functions I am using across multiple projects.
 Utilxx is a C++17 libary and can therefor only be used with compilers supporting C++17.
